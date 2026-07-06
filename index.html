@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a Project — Andrew Wekesa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;
+  --border:#2a2a3a;--border2:#3a3a4a;
+  --green:#00ff88;--green-dim:#00cc66;--cyan:#00e5ff;
+  --yellow:#ffd700;--red:#ff5555;--purple:#c792ea;
+  --white:#e6edf3;--muted:#718096;--muted2:#4a5568;
+  --accent:#6366f1;--accent2:#818cf8;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(99,102,241,0.06),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(0,255,136,0.04),transparent 60%);pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;font-size:16px;color:var(--green)}
+.nav-logo span{color:var(--white)}
+.nav-links{display:flex;gap:8px}
+.nav-btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid transparent;background:transparent;color:var(--muted)}
+.nav-btn:hover{color:var(--white);border-color:var(--border)}
+.nav-btn.active,.nav-btn.dash{background:var(--accent);color:#fff;border-color:var(--accent)}
+.page{display:none;position:relative;z-index:1}
+.page.active{display:block}
+.hero{max-width:720px;margin:0 auto;padding:80px 24px 50px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(99,102,241,0.35);border-radius:20px;font-size:12px;color:var(--accent2);margin-bottom:28px;background:rgba(99,102,241,0.08)}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.15;letter-spacing:-0.03em;margin-bottom:18px}
+.hero h1 em{background:linear-gradient(135deg,var(--accent2),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.hero p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto 36px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.cta-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 10px 40px rgba(99,102,241,0.3)}
+.steps-section{max-width:860px;margin:0 auto;padding:0 24px 80px}
+.section-label{text-align:center;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px}
+.step-n{font-size:11px;font-weight:700;color:var(--accent2);letter-spacing:.08em;margin-bottom:10px}
+.step h3{font-size:14px;font-weight:600;margin-bottom:5px}
+.step p{font-size:12px;color:var(--muted);line-height:1.5}
+</style>
+<!-- FORM STYLES -->
+<style>
+.form-wrap{max-width:680px;margin:0 auto;padding:40px 24px 80px}
+.form-header{margin-bottom:32px}
+.form-header h2{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+.form-header p{color:var(--muted);font-size:14px}
+.fsection{margin-bottom:26px}
+.fsection-title{font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.fgroup{margin-bottom:14px}
+.fgroup label{display:block;font-size:13px;font-weight:500;color:var(--white);margin-bottom:5px}
+.fgroup label em{color:var(--muted);font-style:normal;font-weight:400}
+input,textarea,select{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--white);font-family:inherit;font-size:14px;transition:border-color .2s,box-shadow .2s;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,0.12)}
+textarea{resize:vertical;min-height:90px}
+select option{background:#111118}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
+.check-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s}
+.check-item:hover{border-color:var(--border2)}
+.check-item input{width:auto;accent-color:var(--accent);flex-shrink:0}
+.check-item label{font-size:13px;color:var(--muted);cursor:pointer;margin:0}
+.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:8px}
+.submit-btn:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 30px rgba(99,102,241,0.3)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.success-wrap{max-width:480px;margin:80px auto;padding:0 24px;text-align:center}
+.success-wrap .icon{font-size:54px;margin-bottom:18px}
+.success-wrap h2{font-size:22px;font-weight:700;margin-bottom:10px}
+.success-wrap p{color:var(--muted);margin-bottom:24px;font-size:14px}
+.outline-btn{padding:11px 22px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--white);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.outline-btn:hover{border-color:var(--accent);color:var(--accent2)}
+/* DASHBOARD */
+.dash-wrap{max-width:1080px;margin:0 auto;padding:32px 24px}
+.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.dash-top h2{font-size:20px;font-weight:700}
+.dstats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:24px}
+.dstat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.dstat-val{font-size:26px;font-weight:700;line-height:1}
+.dstat-lbl{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+.pipeline{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pipe-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.pipe-btn:hover,.pipe-btn.on{border-color:var(--accent);color:var(--accent2);background:rgba(99,102,241,0.1)}
+.clist{display:flex;flex-direction:column;gap:10px}
+.ccard{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;cursor:pointer;transition:border-color .2s}
+.ccard:hover{border-color:var(--border2)}
+.ccard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.ccard-name{font-weight:600;font-size:15px}
+.ccard-proj{color:var(--muted);font-size:13px;margin-top:2px}
+.ccard-meta{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
+.ccard-meta span{font-size:12px;color:var(--muted)}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.03em;white-space:nowrap}
+.b-new{background:rgba(99,102,241,.15);color:var(--accent2);border:1px solid rgba(99,102,241,.3)}
+.b-quoted{background:rgba(255,215,0,.12);color:var(--yellow);border:1px solid rgba(255,215,0,.3)}
+.b-agreed{background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
+.b-progress{background:rgba(0,255,136,.12);color:var(--green);border:1px solid rgba(0,255,136,.3)}
+.b-review{background:rgba(199,146,234,.15);color:var(--purple);border:1px solid rgba(199,146,234,.3)}
+.b-delivered{background:rgba(0,255,136,.2);color:#00dd77;border:1px solid rgba(0,255,136,.4)}
+.b-paid{background:rgba(0,255,136,.3);color:#00ff88;border:1px solid var(--green)}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:660px;margin:auto;padding:28px}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px}
+.modal-head h3{font-size:19px;font-weight:700}
+.close-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--muted);cursor:pointer;font-size:13px}
+.close-btn:hover{color:var(--white)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.ditem label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:3px}
+.ditem p{font-size:13px;color:var(--white)}
+.full{grid-column:1/-1}
+.msection{margin-bottom:18px}
+.msection h4{font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.mactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+.abtn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg3);color:var(--white)}
+.abtn:hover{border-color:var(--accent);color:var(--accent2)}
+.abtn.p{background:var(--accent);border-color:var(--accent);color:#fff}
+.abtn.p:hover{background:var(--accent2)}
+.abtn.d{border-color:rgba(255,85,85,.4);color:var(--red)}
+.abtn.d:hover{background:rgba(255,85,85,.1)}
+select.ssel{width:auto;padding:7px 12px;font-size:13px}
+.notes-ta{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--white);font-family:inherit;font-size:13px;resize:vertical;min-height:72px;outline:none}
+.notes-ta:focus{border-color:var(--accent)}
+/* LOGIN */
+.login-wrap{max-width:360px;margin:110px auto;padding:0 24px}
+.lcard{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:30px}
+.lcard h2{font-size:20px;font-weight:700;margin-bottom:6px}
+.lcard p{color:var(--muted);font-size:13px;margin-bottom:24px}
+.lerr{color:var(--red);font-size:13px;margin-top:10px;display:none}
+@media(max-width:600px){.frow{grid-template-columns:1fr}.dgrid{grid-template-columns:1fr}.dstats{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<!-- HTML STRUCTURE -->
+<nav>
+  <div class="nav-logo">andrew<span>.dev</span></div>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="showPage('home')">Home</button>
+    <button class="nav-btn" onclick="showPage('form')">Start Project</button>
+    <button class="nav-btn dash" onclick="showPage('login')">Dashboard</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge"><span class="pulse"></span> Available for new projects</div>
+    <h1>Got an idea?<br>Let's <em>build it together</em></h1>
+    <p>Describe what you want to build. I'll scope it, price it, and ship it. From idea to live product.</p>
+    <button class="cta-btn" onclick="showPage('form')">→ Start Your Project</button>
+  </div>
+  <div class="steps-section">
+    <div class="section-label">How it works</div>
+    <div class="steps-grid">
+      <div class="step"><div class="step-n">01 — DESCRIBE</div><h3>Tell me what you need</h3><p>Fill a quick form describing your idea, purpose, and features you want.</p></div>
+      <div class="step"><div class="step-n">02 — QUOTE</div><h3>I review & price it</h3><p>I review your submission, ask any questions, and send you a clear quote.</p></div>
+      <div class="step"><div class="step-n">03 — BUILD</div><h3>We start building</h3><p>Once agreed, development starts. You track progress every step of the way.</p></div>
+      <div class="step"><div class="step-n">04 — DELIVER</div><h3>Live & handed over</h3><p>I deploy the product, hand over all code, and provide support.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- INTAKE FORM PAGE -->
+<div class="page" id="page-form">
+  <div class="form-wrap">
+    <div class="form-header">
+      <h2>Start a Project</h2>
+      <p>Tell me what you want to build. The more detail, the better the quote.</p>
+    </div>
+
+    <div class="fsection">
+      <div class="fsection-title">About You</div>
+      <div class="frow">
+        <div class="fgroup"><label>Full Name <em>*</em></label><input type="text" id="f-name" placeholder="Jane Mwangi" required></div>
+        <div class="fgroup"><label>Email Address <em>*</em></label><input type="email" id="f-email" placeholder="jane@company.co.ke" required></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>Phone Number</label><input type="tel" id="f-phone" placeholder="+254 7xx xxx xxx"></div>
+        <div class="fgroup"><label>Company / Organisation <em>(optional)</em></label><input type="text" id="f-company" placeholder="Acme Ltd"></div>
+      </div>
+    </div>
+
+    <div class="fsection">
+      <div class="fsection-title">Your Project</div>
+      <div class="fgroup"><label>Project Name / Working Title <em>*</em></label><input type="text" id="f-title" placeholder="e.g. School Management System"></div>
+      <div class="fgroup"><label>What type of product is this? <em>*</em></label>
+        <select id="f-type">
+          <option value="">— Select type —</option>
+          <option>Web Application</option>
+          <option>Mobile App (React Native / PWA)</option>
+          <option>E-commerce Store</option>
+          <option>Marketplace Platform</option>
+          <option>Dashboard / Admin Panel</option>
+          <option>REST API / Backend</option>
+          <option>Landing Page / Website</option>
+          <option>Hospital / Healthcare System</option>
+          <option>School Management System</option>
+          <option>Inventory / POS System</option>
+          <option>Booking / Appointment System</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fgroup"><label>Describe what you want to build <em>*</em></label><textarea id="f-desc" placeholder="Explain the product — what it does, who uses it, what problem it solves..."></textarea></div>
+      <div class="fgroup"><label>What is the purpose / goal?</label><textarea id="f-purpose" style="min-height:70px" placeholder="e.g. Help schools manage student records, fees, and teacher schedules online..."></textarea></div>
+    </div>
+
+    <div class="fsection">
+      <div class="fsection-title">Features Needed</div>
+      <div class="fgroup"><label>Which features do you need? <em>(check all that apply)</em></label>
+        <div class="checks">
+          <div class="check-item"><input type="checkbox" id="c1" value="User Login & Auth"><label for="c1">User Login & Auth</label></div>
+          <div class="check-item"><input type="checkbox" id="c2" value="Admin Dashboard"><label for="c2">Admin Dashboard</label></div>
+          <div class="check-item"><input type="checkbox" id="c3" value="M-Pesa Payments"><label for="c3">M-Pesa Payments</label></div>
+          <div class="check-item"><input type="checkbox" id="c4" value="SMS Notifications"><label for="c4">SMS Notifications</label></div>
+          <div class="check-item"><input type="checkbox" id="c5" value="Email Notifications"><label for="c5">Email Notifications</label></div>
+          <div class="check-item"><input type="checkbox" id="c6" value="File Uploads"><label for="c6">File Uploads</label></div>
+          <div class="check-item"><input type="checkbox" id="c7" value="Reports & Analytics"><label for="c7">Reports & Analytics</label></div>
+          <div class="check-item"><input type="checkbox" id="c8" value="Search & Filters"><label for="c8">Search & Filters</label></div>
+          <div class="check-item"><input type="checkbox" id="c9" value="Multi-user Roles"><label for="c9">Multi-user Roles</label></div>
+          <div class="check-item"><input type="checkbox" id="c10" value="Mobile Responsive"><label for="c10">Mobile Responsive</label></div>
+          <div class="check-item"><input type="checkbox" id="c11" value="Offline Support (PWA)"><label for="c11">Offline Support (PWA)</label></div>
+          <div class="check-item"><input type="checkbox" id="c12" value="API Integration"><label for="c12">API Integration</label></div>
+        </div>
+      </div>
+      <div class="fgroup"><label>Any other features? <em>(describe)</em></label><textarea id="f-features" style="min-height:70px" placeholder="List any other specific features or requirements..."></textarea></div>
+    </div>
+
+    <div class="fsection">
+      <div class="fsection-title">Timeline & Budget</div>
+      <div class="frow">
+        <div class="fgroup"><label>When do you need it? <em>*</em></label>
+          <select id="f-timeline">
+            <option value="">— Select timeline —</option>
+            <option>ASAP (1–2 weeks)</option>
+            <option>1 Month</option>
+            <option>2–3 Months</option>
+            <option>3–6 Months</option>
+            <option>Flexible / No rush</option>
+          </select>
+        </div>
+        <div class="fgroup"><label>Budget Range (KES) <em>*</em></label>
+          <select id="f-budget">
+            <option value="">— Select range —</option>
+            <option>Under 10,000</option>
+            <option>10,000 – 30,000</option>
+            <option>30,000 – 70,000</option>
+            <option>70,000 – 150,000</option>
+            <option>150,000 – 300,000</option>
+            <option>300,000+</option>
+            <option>Let Andrew quote</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgroup"><label>Do you have an existing system or design? <em>(optional)</em></label><input type="text" id="f-existing" placeholder="Links to figma, existing site, reference apps..."></div>
+      <div class="fgroup"><label>Anything else to add?</label><textarea id="f-notes" style="min-height:70px" placeholder="Any other context, constraints, or questions..."></textarea></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitForm()">Submit Project Request →</button>
+  </div>
+</div>
+
+<!-- SUCCESS PAGE -->
+<div class="page" id="page-success">
+  <div class="success-wrap">
+    <div class="icon">🚀</div>
+    <h2>Request Submitted!</h2>
+    <p>Thanks — I've received your project details. I'll review everything and get back to you within 24 hours with questions or a quote.</p>
+    <button class="outline-btn" onclick="showPage('home')">← Back to Home</button>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="page" id="page-login">
+  <div class="login-wrap">
+    <div class="lcard">
+      <h2>Dashboard Login</h2>
+      <p>Andrew's private client management area.</p>
+      <div class="fgroup"><label>Password</label><input type="password" id="l-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="submit-btn" onclick="doLogin()">Login →</button>
+      <div class="lerr" id="l-err">Incorrect password. Try again.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div class="page" id="page-dash">
+  <div class="dash-wrap">
+    <div class="dash-top">
+      <h2>Client Projects</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="abtn" onclick="exportCSV()">↓ Export CSV</button>
+        <button class="abtn d" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+    <div class="dstats" id="dash-stats"></div>
+    <div class="pipeline" id="pipeline"></div>
+    <div class="clist" id="clist"></div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-head">
+      <h3 id="m-title">Project Details</h3>
+      <button class="close-btn" onclick="closeModalDirect()">✕ Close</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// ── Config ──
+const PASS = 'andrew2026'; // change this to something strong
+
+// ── EmailJS — fill after creating free account at emailjs.com ──
+const EJS = {
+  publicKey:     'YOUR_PUBLIC_KEY',    // Account > API Keys
+  serviceId:     'YOUR_SERVICE_ID',    // Email Services tab
+  templateOwner: 'YOUR_OWNER_TPL',     // template that notifies Andrew
+  templateClient:'YOUR_CLIENT_TPL',    // template that confirms to client
+};
+emailjs.init(EJS.publicKey);
+const STATUSES = ['New','Quoted','Agreed','In Progress','Review','Delivered','Paid'];
+const BADGE = {
+  'New':'b-new','Quoted':'b-quoted','Agreed':'b-agreed',
+  'In Progress':'b-progress','Review':'b-review','Delivered':'b-delivered','Paid':'b-paid'
+};
+const STATUS_COLORS = {
+  'New':'#818cf8','Quoted':'#ffd700','Agreed':'#00e5ff',
+  'In Progress':'#00ff88','Review':'#c792ea','Delivered':'#00dd77','Paid':'#00ff88'
+};
+
+// ── Storage ──
+function getClients(){ return JSON.parse(localStorage.getItem('aw_clients')||'[]'); }
+function saveClients(d){ localStorage.setItem('aw_clients',JSON.stringify(d)); }
+function isLoggedIn(){ return sessionStorage.getItem('aw_auth')==='1'; }
+
+// ── Pages ──
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='dash'){ if(!isLoggedIn()){showPage('login');return;} renderDash(); }
+}
+
+// ── Form submit ──
+async function submitForm(){
+  const get = id => document.getElementById(id);
+  const btn = document.querySelector('.submit-btn');
+  const name=get('f-name').value.trim();
+  const email=get('f-email').value.trim();
+  const title=get('f-title').value.trim();
+  const type=get('f-type').value;
+  const desc=get('f-desc').value.trim();
+  const timeline=get('f-timeline').value;
+  const budget=get('f-budget').value;
+  if(!name||!email||!title||!type||!desc||!timeline||!budget){
+    alert('Please fill all required fields (marked with *).'); return;
+  }
+  const features=[];
+  document.querySelectorAll('.checks input:checked').forEach(c=>features.push(c.value));
+  const client={
+    id: Date.now().toString(),
+    name, email,
+    phone: get('f-phone').value.trim(),
+    company: get('f-company').value.trim(),
+    title, type, desc,
+    purpose: get('f-purpose').value.trim(),
+    features: features.join(', '),
+    extraFeatures: get('f-features').value.trim(),
+    timeline, budget,
+    existing: get('f-existing').value.trim(),
+    notes: get('f-notes').value.trim(),
+    status: 'New',
+    quote: '',
+    devNotes: '',
+    submitted: new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+
+  // Save locally
+  const clients=getClients();
+  clients.unshift(client);
+  saveClients(clients);
+
+  // Send emails via EmailJS
+  btn.disabled=true;
+  btn.textContent='Sending...';
+  const params = {
+    client_name:    client.name,
+    client_email:   client.email,
+    client_phone:   client.phone||'N/A',
+    client_company: client.company||'N/A',
+    project_title:  client.title,
+    project_type:   client.type,
+    project_desc:   client.desc,
+    project_purpose:client.purpose||'N/A',
+    features:       client.features||'None selected',
+    extra_features: client.extraFeatures||'N/A',
+    timeline:       client.timeline,
+    budget:         client.budget,
+    existing:       client.existing||'N/A',
+    notes:          client.notes||'N/A',
+    submitted:      new Date().toLocaleString('en-KE'),
+    to_email:       'andrewekesa675@gmail.com',
+  };
+
+  try {
+    // Notify Andrew
+    if(EJS.publicKey !== 'YOUR_PUBLIC_KEY'){
+      await emailjs.send(EJS.serviceId, EJS.templateOwner, params);
+      // Confirm to client
+      await emailjs.send(EJS.serviceId, EJS.templateClient, {...params, to_email: client.email});
+    }
+  } catch(e){ console.warn('Email send failed:',e); }
+
+  // Reset form
+  ['f-name','f-email','f-phone','f-company','f-title','f-desc','f-purpose','f-features','f-existing','f-notes'].forEach(id=>get(id).value='');
+  ['f-type','f-timeline','f-budget'].forEach(id=>get(id).value='');
+  document.querySelectorAll('.checks input').forEach(c=>c.checked=false);
+  btn.disabled=false; btn.textContent='Submit Project Request →';
+  showPage('success');
+}
+
+// ── Login ──
+function doLogin(){
+  const p=document.getElementById('l-pass').value;
+  const err=document.getElementById('l-err');
+  if(p===PASS){ sessionStorage.setItem('aw_auth','1'); err.style.display='none'; showPage('dash'); }
+  else{ err.style.display='block'; }
+}
+function doLogout(){ sessionStorage.removeItem('aw_auth'); showPage('home'); }
+
+// ── Dashboard ──
+let activeFilter='All';
+function renderDash(){
+  const clients=getClients();
+  // stats
+  const statsEl=document.getElementById('dash-stats');
+  const total=clients.length;
+  const paid=clients.filter(c=>c.status==='Paid').length;
+  const active=clients.filter(c=>['Agreed','In Progress','Review'].includes(c.status)).length;
+  const newC=clients.filter(c=>c.status==='New').length;
+  statsEl.innerHTML=[
+    ['Total',total,'#818cf8'],['New',newC,'#ffd700'],
+    ['Active',active,'#00ff88'],['Paid',paid,'#00dd77']
+  ].map(([l,v,c])=>`<div class="dstat"><div class="dstat-val" style="color:${c}">${v}</div><div class="dstat-lbl">${l}</div></div>`).join('');
+
+  // pipeline filters
+  const pipeEl=document.getElementById('pipeline');
+  const allFilters=['All',...STATUSES];
+  pipeEl.innerHTML=allFilters.map(s=>`<button class="pipe-btn ${activeFilter===s?'on':''}" onclick="setFilter('${s}')">${s} <span style="opacity:.6">(${s==='All'?clients.length:clients.filter(c=>c.status===s).length})</span></button>`).join('');
+
+  // list
+  const listEl=document.getElementById('clist');
+  const filtered=activeFilter==='All'?clients:clients.filter(c=>c.status===activeFilter);
+  if(!filtered.length){ listEl.innerHTML=`<div class="empty">No clients yet${activeFilter!=='All'?' in this stage':''}.</div>`; return; }
+  listEl.innerHTML=filtered.map(c=>`
+    <div class="ccard" onclick="openModal('${c.id}')">
+      <div class="ccard-top">
+        <div>
+          <div class="ccard-name">${esc(c.name)} ${c.company?`<span style="color:var(--muted);font-weight:400;font-size:13px">· ${esc(c.company)}</span>`:''}  </div>
+          <div class="ccard-proj">${esc(c.title)} — ${esc(c.type)}</div>
+        </div>
+        <span class="badge ${BADGE[c.status]||'b-new'}">${c.status}</span>
+      </div>
+      <div class="ccard-meta">
+        <span>📧 ${esc(c.email)}</span>
+        ${c.phone?`<span>📞 ${esc(c.phone)}</span>`:''}
+        <span>💰 ${esc(c.budget)}</span>
+        <span>⏱ ${esc(c.timeline)}</span>
+        <span style="margin-left:auto">${timeAgo(c.submitted)}</span>
+      </div>
+    </div>`).join('');
+}
+
+function setFilter(f){ activeFilter=f; renderDash(); }
+
+function esc(t){ return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function timeAgo(iso){
+  const d=Math.floor((Date.now()-new Date(iso))/1000);
+  if(d<60)return 'just now';
+  if(d<3600)return Math.floor(d/60)+'m ago';
+  if(d<86400)return Math.floor(d/3600)+'h ago';
+  return Math.floor(d/86400)+'d ago';
+}
+
+// ── Modal ──
+let currentId=null;
+function openModal(id){
+  const c=getClients().find(x=>x.id===id);
+  if(!c)return;
+  currentId=id;
+  document.getElementById('m-title').textContent=c.title;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="dgrid">
+      <div class="ditem"><label>Client</label><p>${esc(c.name)}</p></div>
+      <div class="ditem"><label>Company</label><p>${esc(c.company)||'—'}</p></div>
+      <div class="ditem"><label>Email</label><p>${esc(c.email)}</p></div>
+      <div class="ditem"><label>Phone</label><p>${esc(c.phone)||'—'}</p></div>
+      <div class="ditem"><label>Type</label><p>${esc(c.type)}</p></div>
+      <div class="ditem"><label>Timeline</label><p>${esc(c.timeline)}</p></div>
+      <div class="ditem"><label>Budget</label><p>${esc(c.budget)}</p></div>
+      <div class="ditem"><label>Submitted</label><p>${new Date(c.submitted).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})}</p></div>
+      <div class="ditem full"><label>Description</label><p style="white-space:pre-wrap;line-height:1.6">${esc(c.desc)}</p></div>
+      ${c.purpose?`<div class="ditem full"><label>Purpose / Goal</label><p style="white-space:pre-wrap;line-height:1.6">${esc(c.purpose)}</p></div>`:''}
+      ${c.features?`<div class="ditem full"><label>Features Requested</label><p>${esc(c.features)}</p></div>`:''}
+      ${c.extraFeatures?`<div class="ditem full"><label>Extra Features</label><p>${esc(c.extraFeatures)}</p></div>`:''}
+      ${c.existing?`<div class="ditem full"><label>Existing / References</label><p>${esc(c.existing)}</p></div>`:''}
+      ${c.notes?`<div class="ditem full"><label>Client Notes</label><p>${esc(c.notes)}</p></div>`:''}
+    </div>
+    <div class="msection">
+      <h4>Your Quote (KES)</h4>
+      <input type="text" id="m-quote" value="${esc(c.quote)}" placeholder="e.g. 45,000" style="max-width:260px">
+    </div>
+    <div class="msection">
+      <h4>Your Notes</h4>
+      <textarea class="notes-ta" id="m-devnotes">${esc(c.devNotes)}</textarea>
+    </div>
+    <div class="msection">
+      <h4>Status</h4>
+      <select class="ssel" id="m-status">
+        ${STATUSES.map(s=>`<option value="${s}" ${c.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+    <div class="mactions">
+      <button class="abtn p" onclick="saveClient()">💾 Save Changes</button>
+      <button class="abtn" onclick="emailClient('${esc(c.email)}','${esc(c.title)}')">✉ Email Client</button>
+      <button class="abtn d" onclick="deleteClient('${c.id}')">🗑 Delete</button>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function saveClient(){
+  const clients=getClients();
+  const i=clients.findIndex(x=>x.id===currentId);
+  if(i<0)return;
+  clients[i].quote=document.getElementById('m-quote').value;
+  clients[i].devNotes=document.getElementById('m-devnotes').value;
+  clients[i].status=document.getElementById('m-status').value;
+  clients[i].updated=new Date().toISOString();
+  saveClients(clients);
+  closeModalDirect();
+  renderDash();
+}
+
+function deleteClient(id){
+  if(!confirm('Delete this client? This cannot be undone.'))return;
+  saveClients(getClients().filter(c=>c.id!==id));
+  closeModalDirect();
+  renderDash();
+}
+
+function emailClient(email,title){
+  if(EJS.publicKey !== 'YOUR_PUBLIC_KEY'){
+    const c=getClients().find(x=>x.id===currentId);
+    const quote=document.getElementById('m-quote')?.value||c?.quote||'';
+    const params={
+      client_name: c?.name||'',
+      client_email: email,
+      project_title: title,
+      quote: quote||'To be confirmed',
+      to_email: email,
+    };
+    emailjs.send(EJS.serviceId, EJS.templateClient, params)
+      .then(()=>alert('Email sent to '+email))
+      .catch(()=>window.open(`mailto:${email}?subject=Re: ${encodeURIComponent(title)}`,'_blank'));
+  } else {
+    window.open(`mailto:${email}?subject=Re: ${encodeURIComponent(title)}&body=Hi,%0A%0AThank you for your project inquiry.%0A%0AAndrew Wekesa%0Aandrewekesa675@gmail.com`,'_blank');
+  }
+}
+
+function closeModal(e){
+  if(e.target===document.getElementById('modal-overlay'))closeModalDirect();
+}
+function closeModalDirect(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  currentId=null;
+}
+
+// ── Export CSV ──
+function exportCSV(){
+  const clients=getClients();
+  if(!clients.length){alert('No clients to export.');return;}
+  const headers=['Name','Email','Phone','Company','Project','Type','Status','Budget','Timeline','Quote','Submitted'];
+  const rows=clients.map(c=>[c.name,c.email,c.phone,c.company,c.title,c.type,c.status,c.budget,c.timeline,c.quote,c.submitted].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv=[headers.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='clients_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+// seed demo data if empty
+if(!getClients().length){
+  const demo=[
+    {id:'demo1',name:'Jane Mwangi',email:'jane@acme.co.ke',phone:'+254712345678',company:'Acme Ltd',title:'School Management System',type:'Web Application',desc:'A full school management system for primary schools. Needs student registration, fee tracking, and teacher management.',purpose:'Digitize school operations and reduce paperwork.',features:'User Login & Auth, Admin Dashboard, M-Pesa Payments, Reports & Analytics',extraFeatures:'Bulk SMS to parents',timeline:'2–3 Months',budget:'70,000 – 150,000',existing:'',notes:'Has a tight deadline — term starts in March.',status:'New',quote:'',devNotes:'',submitted:new Date(Date.now()-2*86400000).toISOString(),updated:new Date().toISOString()},
+    {id:'demo2',name:'Brian Otieno',email:'brian@startup.ke',phone:'+254722000111',company:'',title:'Delivery Tracking App',type:'Web Application',desc:'Track delivery riders in real time. Customers get SMS updates. Admin can assign orders.',purpose:'Replace manual WhatsApp coordination with a proper system.',features:'User Login & Auth, SMS Notifications, Admin Dashboard, Mobile Responsive',extraFeatures:'',timeline:'1 Month',budget:'30,000 – 70,000',existing:'https://figma.com/example',notes:'',status:'Quoted',quote:'55,000',devNotes:'Quoted 55k. Waiting for approval.',submitted:new Date(Date.now()-5*86400000).toISOString(),updated:new Date().toISOString()},
+  ];
+  saveClients(demo);
+}
+</script>
+</body>
+</html>
