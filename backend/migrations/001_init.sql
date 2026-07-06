@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS clients (
+  id          TEXT PRIMARY KEY,
+  name        TEXT NOT NULL,
+  email       TEXT NOT NULL,
+  phone       TEXT,
+  company     TEXT,
+  title       TEXT NOT NULL,
+  type        TEXT NOT NULL,
+  description TEXT NOT NULL,
+  purpose     TEXT,
+  features    TEXT,
+  extra_features TEXT,
+  timeline    TEXT NOT NULL,
+  budget      TEXT NOT NULL,
+  existing    TEXT,
+  notes       TEXT,
+  status      TEXT DEFAULT 'New',
+  quote       TEXT DEFAULT '',
+  dev_notes   TEXT DEFAULT '',
+  submitted   TEXT NOT NULL,
+  updated     TEXT NOT NULL
+);

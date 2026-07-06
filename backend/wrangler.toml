@@ -1,0 +1,12 @@
+name = "client-mgmt-backend"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "client-mgmt-db"
+database_id = "7dd17b32-fa5d-4dc1-a1a2-8ed1d59c5da3"
+
+[vars]
+ADMIN_PASSWORD = "andrew2026"
